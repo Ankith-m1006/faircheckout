@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FairCheckout</title>
+<meta name="description" content="Kane CLI shops your checkout like an honest customer, catches dark patterns with proof, and checks the fix.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf7f2;--ink:#1d1a16;--mute:#6a6158;--line:#e7dfd3;--bad:#b3261e;--good:#2f7a4f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 Inter,system-ui,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+header{padding:28px 0;display:flex;justify-content:space-between;align-items:center}
+.logo{font:600 22px Fraunces,serif}.logo span{color:var(--good)}
+header a{color:var(--mute);font-size:15px;text-decoration:none;margin-left:18px}
+h1{font:600 clamp(38px,6vw,64px)/1.03 Fraunces,serif;letter-spacing:-.03em;margin:40px 0 18px;max-width:820px}
+.lede{font-size:20px;color:#3b342c;max-width:680px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0 50px}
+.btn{border-radius:999px;padding:12px 22px;text-decoration:none;font-weight:600;font-size:15px;background:var(--ink);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:56px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+.panel .s{font:600 52px Fraunces,serif;line-height:1}
+.panel.bad .s{color:var(--bad)}.panel.good .s{color:var(--good)}
+.panel ul{list-style:none;margin:14px 0 16px}.panel li{padding:6px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.panel a{font-weight:600;color:var(--ink)}
+h2{font:600 30px Fraunces,serif;letter-spacing:-.02em;margin:0 0 16px}
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:56px}
+.step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;font-size:15px}
+.step b{display:block;font:600 18px Fraunces,serif;margin-bottom:4px}
+pre{background:var(--ink);color:#f3eee6;border-radius:14px;padding:18px 20px;font:14px/1.7 'JetBrains Mono',monospace;overflow-x:auto;margin-bottom:56px}
+.law{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:56px;font-size:15px}
+.law div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+footer{color:var(--mute);font-size:14px;padding:30px 0 50px;border-top:1px solid var(--line)}
+@media (max-width:760px){.ba,.loop,.law{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="logo">Fair<span>Checkout</span></div><nav><a href="#how">How it works</a><a href="https://github.com/Ankith-m1006/faircheckout">GitHub</a></nav></header>
+
+<h1>Your checkout, shopped by an honest customer.</h1>
+<p class="lede">FairCheckout sends Kane, a browser agent, through your store like a real customer with one simple goal. It catches dark patterns (sneaked add-ons, hidden fees, fake timers, cancel mazes), shows exactly where it happened, names the rule it breaks, hands the fix to your coding agent, and shops again to prove the fix.</p>
+<div class="cta"><a class="btn" href="report/before.html">See the audit</a><a class="btn ghost" href="store/?tricks=on">Try the tricked store</a><a class="btn ghost" href="store/">Try the fixed store</a></div>
+
+<div class="ba">
+  <div class="panel bad"><div class="s">0/6</div><p>Kirana Threads, before</p>
+    <ul><li>₹99 protection plan slipped into the cart</li><li>₹49 "convenience fee" only on the last step</li><li>Countdown that restarts on every visit</li><li>"No thanks, I don't like saving money"</li><li>Cancel = four pages and a phone number</li><li>No guest checkout</li></ul>
+    <a href="report/before.html">Read Kane's findings →</a></div>
+  <div class="panel good"><div class="s">6/6</div><p>Same store, after the coding agent fixed FIXES.md</p>
+    <ul><li>Cart total is exactly what you chose</li><li>Final price matches the cart</li><li>No fake deadline</li><li>A neutral "No thanks"</li><li>Cancel in one click</li><li>Guest checkout</li></ul>
+    <a href="report/after.html">Read the re-check →</a></div>
+</div>
+
+<h2 id="how">The loop</h2>
+<div class="loop">
+  <div class="step"><b>1. Shop</b>Kane runs six honest-customer goals in a real browser, like "buy one tee and nothing else".</div>
+  <div class="step"><b>2. Catch</b>A goal that can't be met honestly is a dark pattern, with Kane's steps and an evidence pack.</div>
+  <div class="step"><b>3. Fix</b>FIXES.md gives your coding agent each finding, the fix and the rule it breaks.</div>
+  <div class="step"><b>4. Prove</b>Kane shops again. The audit exits non-zero until the store is clean, so it can gate CI.</div>
+</div>
+
+<h2>Run it on your store</h2>
+<pre>npm install -g @testmuai/kane-cli && kane-cli login --oauth
+git clone https://github.com/Ankith-m1006/faircheckout && cd faircheckout
+# set your store's URL, one product and its price in faircheckout.config.json
+node bin/faircheckout.mjs audit --url https://your-store.example/</pre>
+
+<h2>Why it matters</h2>
+<div class="law">
+  <div><b>India</b><br>The CCPA's 2023 guidelines ban 13 dark patterns, and in June 2025 it asked e-commerce platforms to audit themselves.</div>
+  <div><b>EU</b><br>The Digital Services Act and consumer law forbid interfaces that distort choice, pre-ticked paid extras and hard cancellation.</div>
+  <div><b>US</b><br>The FTC treats hidden fees and cancel mazes as unfair or deceptive; ROSCA requires simple cancellation.</div>
+</div>
+
+<footer>Built for the Kane CLI hackathon. Kirana Threads is a fictional demo store; nothing is charged. Legal references are for information, not legal advice.</footer>
+</div>
+</body>
+</html>

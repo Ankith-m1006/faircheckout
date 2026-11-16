@@ -13,7 +13,7 @@ const opt = (name, d) => { const i = args.indexOf('--' + name); return i >= 0 ? 
 const flag = (name) => args.includes('--' + name);
 
 if (cmd !== 'audit') {
-  console.log('Usage: faircheckout audit [--url URL] [--only basket-sneaking,drip-pricing] [--concurrency 3] [--headed]');
+  console.log('Usage: faircheckout audit [--url URL] [--only basket-sneaking,drip-pricing] [--concurrency 3] [--out name] [--headed]');
   process.exit(cmd ? 1 : 0);
 }
 
@@ -21,6 +21,7 @@ const config = JSON.parse(readFileSync(join(ROOT, 'faircheckout.config.json'), '
 const url = opt('url', config.url);
 const only = opt('only', '')?.split(',').filter(Boolean);
 const concurrency = Number(opt('concurrency', 3));
+const outName = opt('out', 'index');
 const checks = JSON.parse(readFileSync(join(ROOT, 'checks.json'), 'utf8')).checks.filter((c) => !only.length || only.includes(c.id));
 // Path to Kane CLI's entry script (global npm install), or override with KANE_CLI_JS.
 const KANE = process.env.KANE_CLI_JS || join(execSync('npm root -g').toString().trim(), '@testmuai', 'kane-cli', 'bin', 'kane-cli.cjs');
@@ -80,7 +81,7 @@ const score = Math.round((passed / results.length) * 100);
 const at = new Date().toISOString();
 
 mkdirSync(join(ROOT, 'report'), { recursive: true });
-writeFileSync(join(ROOT, 'report', 'latest.json'), JSON.stringify({ url, at, score, results }, null, 2));
+writeFileSync(join(ROOT, 'report', `${outName === 'index' ? 'latest' : outName}.json`), JSON.stringify({ url, at, score, results }, null, 2));
 
 // Fix list for the coding agent: only the failed checks, with the customer goal Kane could not complete.
 const failed = results.filter((r) => r.status !== 'pass');
@@ -94,7 +95,7 @@ const card = (r) => `<article class="f ${r.status}"><div class="h"><span class="
   ${r.status !== 'pass' ? `<p><b>Fix:</b> ${esc(r.fix)}</p><ul class="law">${r.law.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>` : ''}
   <details><summary>Kane's steps (${r.steps.length}, ${r.seconds}s)</summary><ol>${r.steps.map((s) => `<li class="${s.status}">${esc(s.remark)}</li>`).join('')}</ol>
   <p class="ev">Customer goal: ${esc(r.objective)}</p>${r.evidence ? `<p class="ev">Evidence pack: <code>kane-cli evidence serve ${esc(r.evidence)}</code></p>` : ''}</details></article>`;
-writeFileSync(join(ROOT, 'report', 'index.html'), `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FairCheckout report</title>
+writeFileSync(join(ROOT, 'report', `${outName}.html`), `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FairCheckout report</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>:root{--ink:#1d1a16;--mute:#6a6158;--line:#e7dfd3;--bad:#b3261e;--good:#2f7a4f}*{box-sizing:border-box;margin:0}body{background:#faf7f2;color:var(--ink);font:16px/1.55 Inter,sans-serif;padding:32px 16px}main{max-width:860px;margin:0 auto}
 h1{font:600 38px/1.1 Fraunces,serif;letter-spacing:-.02em}.meta{color:var(--mute);margin:8px 0 22px}.score{display:flex;gap:18px;align-items:center;background:var(--ink);color:#fff;border-radius:18px;padding:20px 24px;margin-bottom:22px}.score b{font:600 54px Fraunces,serif}
@@ -107,5 +108,5 @@ h3{font:600 21px Fraunces,serif}.q{color:var(--mute);margin:4px 0 8px}.law{font-
 ${results.map(card).join('\n')}
 <p class="foot">Legal references are for information, not legal advice. FairCheckout maps each finding to India's CCPA Guidelines for Prevention and Regulation of Dark Patterns (2023), EU rules and US FTC guidance.</p></main></body></html>`);
 
-console.log(`\nScore ${score}/100 · ${passed}/${results.length} passed · report/index.html · FIXES.md`);
+console.log(`\nScore ${score}/100 · ${passed}/${results.length} passed · report/${outName}.html · FIXES.md`);
 process.exit(failed.length ? 1 : 0);

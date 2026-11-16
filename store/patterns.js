@@ -8,3 +8,8 @@ window.PATTERNS = {
   subscriptionTrap: false,  // cancelling the membership takes far more steps than joining
   forcedAction: false,      // customers must create an account to buy
 };
+
+// Live demo switch: open the store with ?tricks=on to see the original store with all six dark patterns.
+if (new URLSearchParams(location.search).get('tricks') === 'on') {
+  for (const k of Object.keys(window.PATTERNS)) window.PATTERNS[k] = true;
+}

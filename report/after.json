@@ -1,0 +1,275 @@
+{
+  "url": "http://localhost:5174/",
+  "at": "2026-11-16T09:35:10.852Z",
+  "score": 100,
+  "results": [
+    {
+      "id": "basket-sneaking",
+      "name": "Nothing is added to the cart that the customer did not choose",
+      "pattern": "Basket sneaking",
+      "objective": "Add the Cotton Tee to the cart. Then, on the cart page, do not click, tick or untick anything. Only read the Total shown on the cart page and assert it equals ₹548.",
+      "fix": "Leave every paid add-on (plans, insurance, donations) unticked and out of the cart until the customer chooses it.",
+      "law": [
+        "India: CCPA Guidelines for Prevention and Regulation of Dark Patterns, 2023, Annexure 1 (2) Basket sneaking",
+        "EU: Consumer Rights Directive Art. 22 (no pre-ticked boxes for extra payments)",
+        "US: FTC Act Sec. 5 (unfair or deceptive practices)"
+      ],
+      "status": "pass",
+      "summary": "Added the Cotton Tee to the cart as requested.\nViewed the cart total without changing any cart options.\nThe total shown was ₹548.",
+      "steps": [
+        {
+          "status": "done",
+          "remark": "navigate: Navigate to http://localhost:5174/"
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Add Cotton Tee to cart"
+        },
+        {
+          "status": "done",
+          "remark": "wait: PRIMARY: wait for the cart page to load"
+        },
+        {
+          "status": "done",
+          "remark": "analyze: The Total shown on the cart page equals ₹548."
+        },
+        {
+          "status": "done",
+          "remark": "assert: the Total shown on the cart page equals ₹548."
+        }
+      ],
+      "evidence": "C:\\Users\\ankit\\.testmuai\\kaneai\\sessions\\40470e10-8dd3-4e77-bd60-39f435d9366d\\evidence\\b0d8a09a-b55d-411f-9213-f3749c76021a.evidence",
+      "seconds": 88
+    },
+    {
+      "id": "drip-pricing",
+      "name": "The price on the last step matches the price shown in the cart",
+      "pattern": "Drip pricing",
+      "objective": "Add the Cotton Tee to the cart. On the cart page, untick any optional add-on so only the Cotton Tee remains, then read and remember the cart Total. Click Checkout. If there is a guest option use it; otherwise create an account with email demo-shopper@example.com and password demo-pass-1234 (this is a demo store). On the payment page, read the Total to pay and assert it equals the cart Total you remembered.",
+      "fix": "Show every mandatory fee in the price from the first moment (product page and cart), never only on the final payment step.",
+      "law": [
+        "India: CCPA Dark Patterns Guidelines 2023, Annexure 1 (8) Drip pricing",
+        "EU: Unfair Commercial Practices Directive, price transparency; DSA Art. 25",
+        "US: FTC Act Sec. 5; FTC guidance on hidden 'junk' fees"
+      ],
+      "status": "pass",
+      "summary": "Added the Cotton Tee to the cart and removed any optional add-on so the cart contained only the tee.\nRecorded the cart total as ₹548.\nClicked Checkout and continued as a guest.\nRecorded the payment-page total as ₹548; it matched the cart total.",
+      "steps": [
+        {
+          "status": "done",
+          "remark": "navigate: Navigate to http://localhost:5174/"
+        },
+        {
+          "status": "done",
+          "remark": "analyze: the cart Total is saved as {{cart_total}}"
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Checkout"
+        },
+        {
+          "status": "done",
+          "remark": "wait: PRIMARY: wait for the Checkout heading to be visible"
+        },
+        {
+          "status": "done",
+          "remark": "analyze: there is a guest option"
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Continue as guest"
+        },
+        {
+          "status": "done",
+          "remark": "wait: Waiting briefly on the Review and pay page"
+        },
+        {
+          "status": "done",
+          "remark": "wait: PRIMARY: wait for the Review and pay heading to be visible"
+        },
+        {
+          "status": "done",
+          "remark": "analyze: {{payment_total}} equals {{cart_total}}"
+        },
+        {
+          "status": "done",
+          "remark": "assert: {{payment_total}} equals {{cart_total}}"
+        }
+      ],
+      "evidence": "C:\\Users\\ankit\\.testmuai\\kaneai\\sessions\\65116c08-84ca-4fa8-a345-9832698eb521\\evidence\\40c63ac4-dd7d-4a55-bcf1-42c38c7350df.evidence",
+      "seconds": 248
+    },
+    {
+      "id": "false-urgency",
+      "name": "Any countdown is a real deadline",
+      "pattern": "False urgency",
+      "objective": "On the home page, look for a countdown or 'deal ends' timer. If there is none, assert that no countdown is shown. If there is one, read the time left, wait 20 seconds, reload the page, and read the time left again. Assert that the time left after reloading is at least 15 seconds lower than the first reading.",
+      "fix": "Only show a countdown for a real deadline that keeps counting down for everyone; never restart it on reload.",
+      "law": [
+        "India: CCPA Dark Patterns Guidelines 2023, Annexure 1 (1) False urgency",
+        "EU: Unfair Commercial Practices Directive, Annex I point 7 (false 'limited time' claims)",
+        "US: FTC Act Sec. 5"
+      ],
+      "status": "pass",
+      "summary": "Checked the home page for a countdown or “deal ends” timer.\nNo countdown or “deal ends” timer was shown on the home page.\nThe run finished on the checkout page.",
+      "steps": [
+        {
+          "status": "done",
+          "remark": "navigate: Navigate to http://localhost:5174/"
+        },
+        {
+          "status": "done",
+          "remark": "analyze: There is a countdown or 'deal ends' timer on the home page."
+        },
+        {
+          "status": "done",
+          "remark": "analyze: no countdown is shown"
+        },
+        {
+          "status": "done",
+          "remark": "assert: no countdown is shown"
+        },
+        {
+          "status": "done",
+          "remark": "wait: Waiting briefly after conditional countdown checkpoint resolution"
+        }
+      ],
+      "evidence": "C:\\Users\\ankit\\.testmuai\\kaneai\\sessions\\dd42b665-d312-4917-b23e-9ce5ec26fbc4\\evidence\\1e509043-6f8c-4a97-8277-7a7b9b289002.evidence",
+      "seconds": 92
+    },
+    {
+      "id": "confirm-shaming",
+      "name": "Saying no is respectful",
+      "pattern": "Confirm shaming",
+      "objective": "Add the Cotton Tee to the cart and open the cart. Find the option to decline the membership offer. Read its exact text. Assert that the decline text is neutral (like 'No thanks') and does not guilt, shame or mock the customer for saying no.",
+      "fix": "Use a neutral decline label such as 'No thanks'.",
+      "law": [
+        "India: CCPA Dark Patterns Guidelines 2023, Annexure 1 (3) Confirm shaming",
+        "EU: DSA Art. 25 (no interfaces that distort free choice)",
+        "US: FTC staff report 'Bringing Dark Patterns to Light' (2022)"
+      ],
+      "status": "pass",
+      "summary": "Added the Cotton Tee to the cart and opened the cart page.\nFound the membership-offer decline option: “No thanks.”\nConfirmed that the decline wording was neutral and did not guilt, shame, or mock the customer.",
+      "steps": [
+        {
+          "status": "done",
+          "remark": "navigate: Navigate to http://localhost:5174/"
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Add Cotton Tee to cart button"
+        },
+        {
+          "status": "done",
+          "remark": "wait: PRIMARY: confirm the cart is open with Cotton Tee added"
+        },
+        {
+          "status": "done",
+          "remark": "wait: PRIMARY: confirm the option to decline the membership offer is visible; role=but"
+        },
+        {
+          "status": "done",
+          "remark": "analyze: ANALYZE(textual_visual, 'The exact text of the option to decline the membership "
+        },
+        {
+          "status": "done",
+          "remark": "analyze: ANALYZE(textual_visual, '{{membership_decline_text}} does not guilt, shame or mo"
+        },
+        {
+          "status": "done",
+          "remark": "assert: {{membership_decline_text}} is neutral (like 'No thanks') and does not guilt, sh"
+        }
+      ],
+      "evidence": "C:\\Users\\ankit\\.testmuai\\kaneai\\sessions\\6d06f780-322e-4d2c-9ec1-bd223590be13\\evidence\\e58cfb50-3530-4915-a6e0-f420ffab8857.evidence",
+      "seconds": 182
+    },
+    {
+      "id": "subscription-trap",
+      "name": "Cancelling is as easy as joining",
+      "pattern": "Subscription trap",
+      "objective": "Open the Account page and join the Threads Plus membership. Then cancel the membership online. You may click at most 3 times after joining. Assert that the page confirms the membership is cancelled, without needing a phone call, email or chat.",
+      "fix": "Put a 'Cancel membership' button on the account page that cancels in one or two clicks, as easy as joining.",
+      "law": [
+        "India: CCPA Dark Patterns Guidelines 2023, Annexure 1 (5) Subscription trap",
+        "EU: DSA Art. 25(3)(c) (cancelling must not be harder than subscribing)",
+        "US: Restore Online Shoppers' Confidence Act (ROSCA), simple cancellation"
+      ],
+      "status": "pass",
+      "summary": "The requested Threads Plus membership was joined from the Account page.\nThe membership was then cancelled online.\nThe final page confirmed that the membership was cancelled, with no phone call, email, or chat required.",
+      "steps": [
+        {
+          "status": "done",
+          "remark": "navigate: Navigate to http://localhost:5174/"
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Account in the top navigation"
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Join Threads Plus (₹199/month) in the account section"
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Cancel membership button"
+        },
+        {
+          "status": "done",
+          "remark": "wait: PRIMARY: wait for the membership cancellation confirmation page to load"
+        },
+        {
+          "status": "done",
+          "remark": "analyze: chat is not needed to cancel the membership"
+        },
+        {
+          "status": "done",
+          "remark": "assert: the page confirms the membership is cancelled, without needing a phone call, ema"
+        }
+      ],
+      "evidence": "C:\\Users\\ankit\\.testmuai\\kaneai\\sessions\\87545bf0-2ab2-413e-8536-712030a9b822\\evidence\\c6f76e12-7636-45e8-96f8-149ae1b72e6f.evidence",
+      "seconds": 171
+    },
+    {
+      "id": "forced-action",
+      "name": "Customers can buy without being forced to sign up",
+      "pattern": "Forced action",
+      "objective": "Add the Cotton Tee to the cart and click Checkout. Assert that you can continue to the payment page as a guest, without creating an account or entering a password.",
+      "fix": "Offer guest checkout; ask for an account only as an option after the order.",
+      "law": [
+        "India: CCPA Dark Patterns Guidelines 2023, Annexure 1 (4) Forced action",
+        "EU: GDPR Art. 5(1)(c) data minimisation; DSA Art. 25",
+        "US: FTC Act Sec. 5"
+      ],
+      "status": "pass",
+      "summary": "Added the Cotton Tee to the cart.\nOpened checkout.\nConfirmed that checkout offers a “Continue as guest” option leading to payment, with no account creation or password required.",
+      "steps": [
+        {
+          "status": "done",
+          "remark": "navigate: Navigate to http://localhost:5174/"
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Add Cotton Tee to cart"
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Checkout"
+        },
+        {
+          "status": "done",
+          "remark": "wait: PRIMARY: wait for the Checkout page to finish loading"
+        },
+        {
+          "status": "done",
+          "remark": "analyze: ANALYZE(visual, 'Entering a password is not required to continue to the payment "
+        },
+        {
+          "status": "done",
+          "remark": "assert: you can continue to the payment page as a guest, without creating an account or "
+        }
+      ],
+      "evidence": "C:\\Users\\ankit\\.testmuai\\kaneai\\sessions\\f73b5193-6ded-495b-9a7c-36388b1f3390\\evidence\\22bb37e2-ba55-40a4-bc90-eea5b9a54fbd.evidence",
+      "seconds": 85
+    }
+  ]
+}
