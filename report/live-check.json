@@ -1,0 +1,45 @@
+{
+  "url": "https://faircheckout.vercel.app/store/?tricks=on",
+  "at": "2026-11-16T10:02:27.543Z",
+  "score": 0,
+  "results": [
+    {
+      "id": "basket-sneaking",
+      "name": "Nothing is added to the cart that the customer did not choose",
+      "pattern": "Basket sneaking",
+      "objective": "Add the Cotton Tee to the cart. Then, on the cart page, do not click, tick or untick anything. Only read the Total shown on the cart page and assert it equals ₹548.",
+      "fix": "Leave every paid add-on (plans, insurance, donations) unticked and out of the cart until the customer chooses it.",
+      "law": [
+        "India: CCPA Guidelines for Prevention and Regulation of Dark Patterns, 2023, Annexure 1 (2) Basket sneaking",
+        "EU: Consumer Rights Directive Art. 22 (no pre-ticked boxes for extra payments)",
+        "US: FTC Act Sec. 5 (unfair or deceptive practices)"
+      ],
+      "status": "fail",
+      "summary": "The cart automatically included a ₹99 protection plan even though the shopper only added the Cotton Tee. The added plan raised the total by ₹99.\nDo not select optional protection automatically. Leave it unchecked unless the shopper explicitly chooses it, then rerun the cart-total check.\nevidence: objective_contradiction: Final verification failed: \"the Total shown on the cart page equals ₹548.\"",
+      "steps": [
+        {
+          "status": "done",
+          "remark": "navigate: Navigate to https://faircheckout.vercel.app/store/?tricks=on"
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Add Cotton Tee to cart"
+        },
+        {
+          "status": "done",
+          "remark": "wait: PRIMARY: wait for the cart page to finish loading"
+        },
+        {
+          "status": "done",
+          "remark": "analyze: the Total shown on the cart page equals ₹548."
+        },
+        {
+          "status": "failed",
+          "remark": "assert: the Total shown on the cart page equals ₹548."
+        }
+      ],
+      "evidence": "C:\\Users\\ankit\\.testmuai\\kaneai\\sessions\\d3762386-56bb-4cf7-a82a-eb3fc383d122\\evidence\\ead644e5-7108-4b31-976b-f49686c4d019.evidence",
+      "seconds": 117
+    }
+  ]
+}

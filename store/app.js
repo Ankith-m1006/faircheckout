@@ -119,7 +119,7 @@ function render() {
   startClock();
   document.querySelectorAll('[data-add]').forEach((b) => (b.onclick = () => addToCart(b.dataset.add)));
   const plan = $('#plan');
-  if (plan) plan.onchange = () => setCart(plan.checked ? [...cart, { id: 'plan', qty: 1 }] : cart.filter((l) => l.id !== 'plan'));
+  if (plan) plan.onchange = () => { setCart(plan.checked ? [...cart, { id: 'plan', qty: 1 }] : cart.filter((l) => l.id !== 'plan')); render(); };
   if ($('#join')) $('#join').onclick = () => { member = true; save('kt-member', true); location.hash = '#/account'; render(); };
   if ($('#decline')) $('#decline').onclick = () => { $('#decline').closest('.offer').remove(); };
   if ($('#create')) $('#create').onclick = () => {
