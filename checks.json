@@ -1,0 +1,53 @@
+{
+  "note": "Each check is one honest customer goal, run by Kane CLI in a real browser. {{url}} is the store under test. Prices are read from the store's own product page, so the checks work on any store that sets the matching facts in faircheckout.config.json.",
+  "checks": [
+    {
+      "id": "basket-sneaking",
+      "name": "Nothing is added to the cart that the customer did not choose",
+      "pattern": "Basket sneaking",
+      "objective": "Add the {{item}} to the cart. Then, on the cart page, do not click, tick or untick anything. Only read the Total shown on the cart page and assert it equals {{itemPlusShipping}}.",
+      "fix": "Leave every paid add-on (plans, insurance, donations) unticked and out of the cart until the customer chooses it.",
+      "law": ["India: CCPA Guidelines for Prevention and Regulation of Dark Patterns, 2023, Annexure 1 (2) Basket sneaking", "EU: Consumer Rights Directive Art. 22 (no pre-ticked boxes for extra payments)", "US: FTC Act Sec. 5 (unfair or deceptive practices)"]
+    },
+    {
+      "id": "drip-pricing",
+      "name": "The price on the last step matches the price shown in the cart",
+      "pattern": "Drip pricing",
+      "objective": "Add the {{item}} to the cart. On the cart page, untick any optional add-on so only the {{item}} remains, then read and remember the cart Total. Click Checkout. If there is a guest option use it; otherwise create an account with email {{email}} and password {{password}} (this is a demo store). On the payment page, read the Total to pay and assert it equals the cart Total you remembered.",
+      "fix": "Show every mandatory fee in the price from the first moment (product page and cart), never only on the final payment step.",
+      "law": ["India: CCPA Dark Patterns Guidelines 2023, Annexure 1 (8) Drip pricing", "EU: Unfair Commercial Practices Directive, price transparency; DSA Art. 25", "US: FTC Act Sec. 5; FTC guidance on hidden 'junk' fees"]
+    },
+    {
+      "id": "false-urgency",
+      "name": "Any countdown is a real deadline",
+      "pattern": "False urgency",
+      "objective": "On the home page, look for a countdown or 'deal ends' timer. If there is none, assert that no countdown is shown. If there is one, read the time left, wait 20 seconds, reload the page, and read the time left again. Assert that the time left after reloading is at least 15 seconds lower than the first reading.",
+      "fix": "Only show a countdown for a real deadline that keeps counting down for everyone; never restart it on reload.",
+      "law": ["India: CCPA Dark Patterns Guidelines 2023, Annexure 1 (1) False urgency", "EU: Unfair Commercial Practices Directive, Annex I point 7 (false 'limited time' claims)", "US: FTC Act Sec. 5"]
+    },
+    {
+      "id": "confirm-shaming",
+      "name": "Saying no is respectful",
+      "pattern": "Confirm shaming",
+      "objective": "Add the {{item}} to the cart and open the cart. Find the option to decline the membership offer. Read its exact text. Assert that the decline text is neutral (like 'No thanks') and does not guilt, shame or mock the customer for saying no.",
+      "fix": "Use a neutral decline label such as 'No thanks'.",
+      "law": ["India: CCPA Dark Patterns Guidelines 2023, Annexure 1 (3) Confirm shaming", "EU: DSA Art. 25 (no interfaces that distort free choice)", "US: FTC staff report 'Bringing Dark Patterns to Light' (2022)"]
+    },
+    {
+      "id": "subscription-trap",
+      "name": "Cancelling is as easy as joining",
+      "pattern": "Subscription trap",
+      "objective": "Open the Account page and join the {{membership}} membership. Then cancel the membership online. You may click at most 3 times after joining. Assert that the page confirms the membership is cancelled, without needing a phone call, email or chat.",
+      "fix": "Put a 'Cancel membership' button on the account page that cancels in one or two clicks, as easy as joining.",
+      "law": ["India: CCPA Dark Patterns Guidelines 2023, Annexure 1 (5) Subscription trap", "EU: DSA Art. 25(3)(c) (cancelling must not be harder than subscribing)", "US: Restore Online Shoppers' Confidence Act (ROSCA), simple cancellation"]
+    },
+    {
+      "id": "forced-action",
+      "name": "Customers can buy without being forced to sign up",
+      "pattern": "Forced action",
+      "objective": "Add the {{item}} to the cart and click Checkout. Assert that you can continue to the payment page as a guest, without creating an account or entering a password.",
+      "fix": "Offer guest checkout; ask for an account only as an option after the order.",
+      "law": ["India: CCPA Dark Patterns Guidelines 2023, Annexure 1 (4) Forced action", "EU: GDPR Art. 5(1)(c) data minimisation; DSA Art. 25", "US: FTC Act Sec. 5"]
+    }
+  ]
+}

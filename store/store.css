@@ -1,0 +1,36 @@
+:root{--bg:#fbf7f0;--card:#fff;--ink:#1f1a14;--ink2:#5b5248;--line:#e8dfd2;--accent:#b5452b;--ok:#2f7a4f;--r:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif}
+a{color:inherit}
+.demo-bar{background:var(--ink);color:#f5efe6;font-size:12.5px;text-align:center;padding:6px 12px}
+.top{display:flex;align-items:center;justify-content:space-between;max-width:1040px;margin:0 auto;padding:18px 20px}
+.brand{font:600 24px Fraunces,serif;text-decoration:none;letter-spacing:-.02em}
+.brand em{font-style:italic;color:var(--accent)}
+nav{display:flex;gap:18px;font-size:15px}
+nav a{text-decoration:none;color:var(--ink2)}
+nav a:hover{color:var(--ink)}
+main{max-width:1040px;margin:0 auto;padding:8px 20px 60px;min-height:70vh}
+h1{font:600 34px/1.15 Fraunces,serif;letter-spacing:-.02em;margin:8px 0 18px}
+h2{font:600 22px Fraunces,serif;margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.swatch{height:170px;border-radius:10px;margin-bottom:12px;display:grid;place-items:center;font:600 46px Fraunces,serif;color:#fff}
+.price{font-weight:600}
+.btn{display:inline-block;border:0;border-radius:999px;background:var(--ink);color:#fff;font:600 15px Inter,sans-serif;padding:11px 20px;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:7px 14px;font-size:14px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.row.total{border:0;font-weight:600;font-size:18px}
+.two{display:grid;grid-template-columns:1.3fr 1fr;gap:22px;align-items:start}
+.urgency{background:#fff1ec;border:1px solid #f2c7b8;color:var(--accent);border-radius:10px;padding:10px 14px;font-weight:600;margin-bottom:14px}
+.addon{display:flex;gap:10px;align-items:flex-start;background:#fffaf2;border:1px solid var(--line);border-radius:10px;padding:12px;margin:12px 0;font-size:14.5px}
+.offer{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-top:16px}
+.decline{background:none;border:0;color:var(--ink2);text-decoration:underline;cursor:pointer;font-size:13.5px;margin-left:12px}
+label{display:block;font-size:14px;color:var(--ink2);margin:10px 0 4px}
+input[type=text],input[type=email],input[type=password]{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:15px Inter,sans-serif;background:#fff}
+.note{font-size:13px;color:var(--ink2)}
+.ok{color:var(--ok);font-weight:600}
+.steps{display:flex;gap:8px;font-size:13px;color:var(--ink2);margin-bottom:10px}
+.steps b{color:var(--ink)}
+.foot{text-align:center;font-size:12.5px;color:var(--ink2);padding:24px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}.two{grid-template-columns:1fr}h1{font-size:28px}}

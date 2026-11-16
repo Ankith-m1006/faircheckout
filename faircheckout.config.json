@@ -1,0 +1,10 @@
+{
+  "url": "http://localhost:5174/",
+  "vars": {
+    "item": "Cotton Tee",
+    "itemPlusShipping": "₹548",
+    "membership": "Threads Plus",
+    "email": "demo-shopper@example.com",
+    "password": "demo-pass-1234"
+  }
+}

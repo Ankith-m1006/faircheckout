@@ -1,0 +1,12 @@
+{
+  "name": "faircheckout",
+  "version": "0.1.0",
+  "description": "Kane CLI shops your checkout like an honest customer and catches dark patterns, with proof.",
+  "type": "module",
+  "bin": { "faircheckout": "bin/faircheckout.mjs" },
+  "scripts": {
+    "store": "python -m http.server 5174 --directory store",
+    "audit": "node bin/faircheckout.mjs audit"
+  },
+  "license": "MIT"
+}
