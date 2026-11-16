@@ -12,13 +12,15 @@ const cmd = args[0];
 const opt = (name, d) => { const i = args.indexOf('--' + name); return i >= 0 ? args[i + 1] : d; };
 const flag = (name) => args.includes('--' + name);
 
-if (cmd !== 'audit') {
-  console.log('Usage: faircheckout audit [--url URL] [--only basket-sneaking,drip-pricing] [--concurrency 3] [--out name] [--headed]');
+if (cmd !== 'audit' && cmd !== 'render') {
+  console.log(['Usage:',
+    '  faircheckout audit [--url URL] [--only basket-sneaking,drip-pricing] [--concurrency 3] [--out name] [--headed]',
+    '  faircheckout render <results.json> [--out name]   (rebuild a report from saved Kane results; no new Kane runs)'].join('\n'));
   process.exit(cmd ? 1 : 0);
 }
 
 const config = JSON.parse(readFileSync(join(ROOT, 'faircheckout.config.json'), 'utf8'));
-const url = opt('url', config.url);
+const urlOpt = opt('url', config.url);
 const only = opt('only', '')?.split(',').filter(Boolean);
 const concurrency = Number(opt('concurrency', 3));
 const outName = opt('out', 'index');
@@ -30,7 +32,7 @@ const fill = (s) => s.replace(/\{\{(\w+)\}\}/g, (_, k) => config.vars[k] ?? `{{$
 // Run one check through Kane CLI and return its verdict, summary and evidence pack.
 function runCheck(check) {
   return new Promise((resolve) => {
-    const kargs = ['run', fill(check.objective), '--url', url, '--max-steps', '20', '--timeout', '420', '--agent'];
+    const kargs = ['run', fill(check.objective), '--url', urlOpt, '--max-steps', '20', '--timeout', '420', '--agent'];
     if (!flag('headed')) kargs.push('--headless');
     const started = Date.now();
     // Run Kane's own entry file with node so the customer goal reaches it as ONE argument (no shell quoting on Windows).
@@ -64,9 +66,8 @@ async function pool(items, n, fn) {
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-console.log(`FairCheckout: Kane is shopping ${url} as an honest customer (${checks.length} checks)...\n`);
 // A crashed browser is not a store finding: retry that check once, and mark it 'error' (not 'fail') if it crashes again.
-const INFRA = /context (ended|closed)|browser (closed|crashed|ended)|runner|timed? ?out|did not finish/i;
+const INFRA = /context (ended|closed)|browser (closed|crashed|ended)|session was closed|runner|timed? ?out|did not finish/i;
 async function runWithRetry(check) {
   const first = await runCheck(check);
   if (first.status === 'pass' || !INFRA.test(first.summary)) return first;
@@ -75,10 +76,18 @@ async function runWithRetry(check) {
   const second = await runCheck(check);
   return second.status === 'pass' || !INFRA.test(second.summary) ? second : { ...second, status: 'error' };
 }
-const results = await pool(checks, concurrency, runWithRetry);
+let results; let at; let url = urlOpt;
+if (cmd === 'render') {
+  const saved = JSON.parse(readFileSync(args[1], 'utf8'));
+  results = saved.results; at = saved.at; url = saved.url;
+} else {
+  console.log(`FairCheckout: Kane is shopping ${url} as an honest customer (${checks.length} checks)...
+`);
+  results = await pool(checks, concurrency, runWithRetry);
+  at = new Date().toISOString();
+}
 const passed = results.filter((r) => r.status === 'pass').length;
 const score = Math.round((passed / results.length) * 100);
-const at = new Date().toISOString();
 
 mkdirSync(join(ROOT, 'report'), { recursive: true });
 writeFileSync(join(ROOT, 'report', `${outName === 'index' ? 'latest' : outName}.json`), JSON.stringify({ url, at, score, results }, null, 2));

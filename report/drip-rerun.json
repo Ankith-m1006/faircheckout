@@ -1,0 +1,89 @@
+{
+  "url": "https://faircheckout.vercel.app/store/?tricks=on",
+  "at": "2026-11-16T10:48:01.146Z",
+  "score": 0,
+  "results": [
+    {
+      "id": "drip-pricing",
+      "name": "The price on the last step matches the price shown in the cart",
+      "pattern": "Drip pricing",
+      "objective": "Add the Cotton Tee to the cart. On the cart page, untick any optional add-on so only the Cotton Tee remains, then read and remember the cart Total. Click Checkout. If there is a guest option use it; otherwise create an account with email demo-shopper@example.com and password demo-pass-1234 (this is a demo store). On the payment page, read the Total to pay and assert it equals the cart Total you remembered.",
+      "fix": "Show every mandatory fee in the price from the first moment (product page and cart), never only on the final payment step.",
+      "law": [
+        "India: CCPA Dark Patterns Guidelines 2023, Annexure 1 (8) Drip pricing",
+        "EU: Unfair Commercial Practices Directive, price transparency; DSA Art. 25",
+        "US: FTC Act Sec. 5; FTC guidance on hidden 'junk' fees"
+      ],
+      "status": "fail",
+      "summary": "After the optional protection plan was removed, the cart total was ₹548. The payment page added a ₹49 convenience fee that was not included in that cart total, so the amount to pay changed without being shown in the cart.\nShow the ₹49 convenience fee in the cart total before checkout, or do not add it at payment. Ensure the cart Total and Total to pay are the same for the unchanged order.\nevidence: objective_contradiction: the cart Total is saved as {{cart_total}}\nevidence: objective_contradiction: {{payment_total}} equals the {{cart_total}}\nevidence: error_ui_text: Convenience fee\nevidence: error_ui_text: ₹597",
+      "steps": [
+        {
+          "status": "done",
+          "remark": "navigate: Navigate to https://faircheckout.vercel.app/store/?tricks=on"
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Add Cotton Tee to cart"
+        },
+        {
+          "status": "done",
+          "remark": "click: Unticking protection plan add-on so only Cotton Tee remains"
+        },
+        {
+          "status": "done",
+          "remark": "analyze: the cart Total is saved as {{cart_total}}"
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Checkout"
+        },
+        {
+          "status": "done",
+          "remark": "wait: PRIMARY: wait for the Checkout page to load"
+        },
+        {
+          "status": "done",
+          "remark": "analyze: there is a guest option"
+        },
+        {
+          "status": "done",
+          "remark": "wait: queued plan (3 steps): type \"Email\"; type \"Password\"; click \"Create account and "
+        },
+        {
+          "status": "done",
+          "remark": "type: Type \"demo-shopper@example.com\" into \"Email\""
+        },
+        {
+          "status": "done",
+          "remark": "type: Type \"demo-pass-1234\" into \"Password\""
+        },
+        {
+          "status": "done",
+          "remark": ""
+        },
+        {
+          "status": "done",
+          "remark": "click: Clicking Create account and continue button"
+        },
+        {
+          "status": "done",
+          "remark": "wait: Waiting 1000 ms after account creation confirmation"
+        },
+        {
+          "status": "done",
+          "remark": "wait: PRIMARY: wait for the payment page to load"
+        },
+        {
+          "status": "done",
+          "remark": "analyze: {{payment_total}} equals the {{cart_total}}"
+        },
+        {
+          "status": "failed",
+          "remark": "assert: {{payment_total}} equals the {{cart_total}}"
+        }
+      ],
+      "evidence": "C:\\Users\\ankit\\.testmuai\\kaneai\\sessions\\4eefec02-571f-4de0-9e64-d241eff765e8\\evidence\\9b50f30b-8ab9-4526-b4f9-d0117ef93ba5.evidence",
+      "seconds": 213
+    }
+  ]
+}
