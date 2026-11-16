@@ -64,7 +64,17 @@ async function pool(items, n, fn) {
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 console.log(`FairCheckout: Kane is shopping ${url} as an honest customer (${checks.length} checks)...\n`);
-const results = await pool(checks, concurrency, runCheck);
+// A crashed browser is not a store finding: retry that check once, and mark it 'error' (not 'fail') if it crashes again.
+const INFRA = /context (ended|closed)|browser (closed|crashed|ended)|runner|timed? ?out|did not finish/i;
+async function runWithRetry(check) {
+  const first = await runCheck(check);
+  if (first.status === 'pass' || !INFRA.test(first.summary)) return first;
+  process.stdout.write(`       retrying ${check.id} (the browser stopped, not a store finding)
+`);
+  const second = await runCheck(check);
+  return second.status === 'pass' || !INFRA.test(second.summary) ? second : { ...second, status: 'error' };
+}
+const results = await pool(checks, concurrency, runWithRetry);
 const passed = results.filter((r) => r.status === 'pass').length;
 const score = Math.round((passed / results.length) * 100);
 const at = new Date().toISOString();
