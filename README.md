@@ -4,7 +4,7 @@
 
 FairCheckout sends [Kane CLI](https://www.testmuai.com/support/docs/kane-cli-introduction/) through a store's checkout like a real customer with one simple goal ("buy one tee and nothing else"). When a goal can't be met honestly, that's a dark pattern. FairCheckout shows where it happened, names the rule it breaks, writes a fix list for your coding agent, and shops again to prove the fix.
 
-Live: https://faircheckout.vercel.app · [before report (0/6)](https://faircheckout.vercel.app/report/before.html) · [after report (6/6)](https://faircheckout.vercel.app/report/after.html) · [tricked store](https://faircheckout.vercel.app/store/?tricks=on) · [fixed store](https://faircheckout.vercel.app/store/)
+Live: https://faircheckout.vercel.app · [demo video](https://youtu.be/aUFhXNQ4aVw) · [before report (0/6)](https://faircheckout.vercel.app/report/before.html) · [after report (6/6)](https://faircheckout.vercel.app/report/after.html) · [tricked store](https://faircheckout.vercel.app/store/?tricks=on) · [fixed store](https://faircheckout.vercel.app/store/)
 
 ## What it checks
 
